@@ -9,7 +9,7 @@ const todos = [
 	{
 		id: 2,
 		text: 'Buy milk 2',
-		createdAt: new Date()
+		createdAt: null
 	},
 	{
 		id: 3,
@@ -23,7 +23,6 @@ export class TodosController {
 
 	public getTodos = (req: Request, res: Response) => {
 		res.json(todos);
-
 		return;
 	};
 
@@ -32,7 +31,6 @@ export class TodosController {
 
 		if (isNaN(id)) {
 			res.status(400).json({ error: 'ID argument is not a number' });
-
 			return;
 		}
 
@@ -44,8 +42,21 @@ export class TodosController {
 	};
 
 	public createTodo = (req: Request, res: Response) => {
-		const body = req.body;
+		const { text } = req.body;
 
-		res.json(body);
+		if (!text) {
+			res.status(400).json({ error: 'Text property is required' });
+			return;
+		}
+
+		const newTodo = {
+			id: todos.length + 1,
+			text: text,
+			createdAt: null
+		};
+
+		todos.push(newTodo);
+
+		res.json(newTodo);
 	};
 }
