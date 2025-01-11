@@ -30,13 +30,22 @@ export class TodosController {
 	public getTodoById = (req: Request, res: Response) => {
 		const id = +req.params.id;
 
-		if (isNaN(id))
-			return res.status(400).json({ error: 'ID argument is not a number' });
+		if (isNaN(id)) {
+			res.status(400).json({ error: 'ID argument is not a number' });
+
+			return;
+		}
 
 		const todo = todos.find((todo) => todo.id === id);
 
 		todo
 			? res.json(todo)
 			: res.status(404).json({ error: `Todo with id ${id} not found` });
+	};
+
+	public createTodo = (req: Request, res: Response) => {
+		const body = req.body;
+
+		res.json(body);
 	};
 }
