@@ -13,6 +13,8 @@ export class TodoRoutes {
 
 		router.post('/', todoController.createTodo);
 
+		router.put('/:id', todoController.updateTodo);
+
 		return router;
 	}
 }
